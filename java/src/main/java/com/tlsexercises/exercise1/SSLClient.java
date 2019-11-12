@@ -27,19 +27,18 @@ public class SSLClient {
         //      https://github.com/mikepound/tls-exercises/blob/master/java/README.md
 
         // Obtain the default socket factory
-        SSLSocketFactory f = null;
+        SSLSocketFactory f = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
         try {
             // Create a socket - will not connect yet
-            SSLSocket socket = null;
+        	SSLSocket socket = (SSLSocket) f.createSocket(REMOTE_HOST, REMOTE_PORT);
+
+        	// Set protocols and suites
+            socket.setEnabledCipherSuites(new String[]{ "TLS_AES_128_GCM_SHA256", "TLS_CHACHA20_POLY1305_SHA256", "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256" });
+            socket.setEnabledProtocols(new String[]{ "TLSv1.3", "TLSv1.2" });
 
             // Handshake to create a session
-
-
-
-            if (socket == null) {
-                return;
-            }
+            socket.startHandshake();
 
             // What parameters were established?
             System.out.println(String.format("Negotiated Session: %s", socket.getSession().getProtocol()));

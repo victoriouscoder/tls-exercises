@@ -39,6 +39,9 @@ public class SSLServer {
             //
             // For help check out:
             //      https://github.com/mikepound/tls-exercises/blob/master/java/README.md
+            
+            socket.setEnabledCipherSuites(new String[]{ "TLS_AES_128_GCM_SHA256", "TLS_CHACHA20_POLY1305_SHA256", "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256" });
+            socket.setEnabledProtocols(new String[]{ "TLSv1.3", "TLSv1.2" });
 
             System.out.println(String.format("Listening on port %d...", socket.getLocalPort()));
 
